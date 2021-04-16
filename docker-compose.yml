@@ -1,0 +1,42 @@
+version: "3.7"
+
+services:
+  test-api:
+    build:
+      context: ./test-app
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/dist
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    logging:
+      driver: none
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=admin
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - 27017:27017
+
+  test-ui:
+    build:
+      context: ./test-ui
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/dist
+    ports:
+      - 4200:80
+
+volumes:
+  mongo-data:
