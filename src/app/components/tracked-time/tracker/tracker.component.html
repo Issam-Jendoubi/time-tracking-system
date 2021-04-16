@@ -1,0 +1,114 @@
+<div class="title">
+  <span class="mat-display-3 primary--fg mt-50">{{
+    automaticProcedure ? "Tracker configuration" : "Manual time booking"
+  }}</span>
+</div>
+<div>
+  <button
+    class="button mx-128"
+    class="button"
+    color="accent"
+    mat-raised-button
+    (click)="setBookingProcedure()"
+  >
+    {{ automaticProcedure ? "Book time manually" : "Track time from tracker" }}
+  </button>
+</div>
+<div *ngIf="automaticProcedure">
+  <div class="form-element">
+    <button
+      class="button mx-128"
+      color="accent"
+      mat-raised-button
+      (click)="startTracker()"
+    >
+      {{ timerStarted ? "Pause timer" : "Start Timer" }}
+    </button>
+    <button
+      class="button mx-128"
+      color="accent"
+      mat-raised-button
+      (click)="resumeTracker()"
+    >
+      Resume timer
+    </button>
+  </div>
+
+  <div class="content-card">
+    <div>
+      <form
+        (ngSubmit)="onSubmit(formGroup.value)"
+        [formGroup]="formGroup"
+        class="form"
+      >
+        <div>
+          <mat-form-field class="form-element">
+            <mat-label>Hours</mat-label>
+            <input formControlName="hours" matInput />
+            <mat-error
+              *ngIf="
+                !formGroup.controls['hours'].valid &&
+                formGroup.controls['hours'].touched
+              "
+            >
+              This field is required.
+            </mat-error>
+          </mat-form-field>
+          <span class="title">:</span>
+
+          <mat-form-field class="form-element">
+            <mat-label>Minutes</mat-label>
+            <input formControlName="minutes" matInput />
+            <mat-error
+              *ngIf="
+                !formGroup.controls['minutes'].valid &&
+                formGroup.controls['minutes'].touched
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+          <span class="title">:</span>
+
+          <mat-form-field class="form-element">
+            <mat-label>Seconds</mat-label>
+            <input formControlName="seconds" matInput />
+            <mat-error
+              *ngIf="
+                !formGroup.controls['seconds'].valid &&
+                formGroup.controls['seconds'].touched
+              "
+            >
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="pt-16">
+          <mat-form-field class="form-element">
+            <mat-label>description</mat-label>
+            <input formControlName="description" matInput />
+            <mat-error *ngIf="!formGroup.controls['description'].valid">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-element">
+          <button
+            [disabled]="!formGroup.valid"
+            class="button mx-128"
+            color="accent"
+            mat-raised-button
+            type="submit"
+          >
+            Book time
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div *ngIf="!automaticProcedure">
+  <app-manual-time-booker></app-manual-time-booker>
+</div>

@@ -1,0 +1,75 @@
+<div class="content-card">
+  <div>
+    <form
+      (ngSubmit)="onSubmit(formGroup.value)"
+      [formGroup]="formGroup"
+      class="form"
+    >
+      <span>Start date and time</span>
+      <div>
+        <!-- DATE -->
+        <mat-form-field appearance="outline">
+          <mat-label>date</mat-label>
+          <input
+            formControlName="startDate"
+            [matDatepicker]="picker"
+            matInput
+          />
+          <mat-datepicker-toggle
+            [for]="picker"
+            matSuffix
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- TIME -->
+        <mat-form-field appearance="outline">
+          <mat-label>time</mat-label>
+          <input formControlName="startTime" matInput type="time" />
+        </mat-form-field>
+      </div>
+
+      <span>Finish date and time</span>
+      <div>
+        <!-- DATE -->
+        <mat-form-field appearance="outline">
+          <mat-label>date</mat-label>
+          <input formControlName="endDate" [matDatepicker]="picker2" matInput />
+          <mat-datepicker-toggle
+            [for]="picker2"
+            matSuffix
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+        <!-- TIME -->
+        <mat-form-field appearance="outline">
+          <mat-label>time</mat-label>
+          <input formControlName="endTime" matInput type="time" />
+        </mat-form-field>
+      </div>
+
+      <div class="pt-16">
+        <mat-form-field class="form-element">
+          <mat-label>description</mat-label>
+          <input formControlName="description" matInput />
+          <mat-error *ngIf="!formGroup.controls['description'].valid">
+            This field is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-element">
+        <button
+          [disabled]="!formGroup.valid"
+          class="button mx-128"
+          color="accent"
+          mat-raised-button
+          type="submit"
+        >
+          Book time
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
